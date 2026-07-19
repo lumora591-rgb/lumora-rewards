@@ -400,3 +400,44 @@ text-align:center;
 color:#888;
 font-size:15px;
 }
+
+/* Mobile Menu */
+
+.menu-toggle{
+display:none;
+font-size:30px;
+color:#FFD700;
+cursor:pointer;
+}
+
+@media (max-width:768px){
+
+.menu-toggle{
+display:block;
+}
+
+.nav-links{
+display:none;
+flex-direction:column;
+position:absolute;
+top:80px;
+left:0;
+width:100%;
+background:#111;
+padding:20px 0;
+}
+
+.nav-links.active{
+display:flex;
+}
+
+.nav-links li{
+text-align:center;
+margin:15px 0;
+}
+
+.nav-buttons{
+display:none;
+}
+
+}
