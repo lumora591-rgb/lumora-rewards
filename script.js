@@ -238,3 +238,14 @@ function completeTask(reward){
     alert("Task completed! You earned ₦" + reward);
 
 }
+
+function copyReferralCode(){
+
+const code =
+document.getElementById("refCode").innerText;
+
+navigator.clipboard.writeText(code);
+
+alert("Referral code copied!");
+
+}
