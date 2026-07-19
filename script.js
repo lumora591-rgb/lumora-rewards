@@ -87,3 +87,6 @@ alert("Congratulations! You earned ₦500.");
 }
 
 updateBalance();
+
+document.getElementById("username").innerHTML =
+localStorage.getItem("username") || "Guest";
