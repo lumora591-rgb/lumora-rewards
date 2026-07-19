@@ -12,6 +12,26 @@ let owner = "Odekunle Emmanuel";
 let users = 0;
 
 let balance = 0;
+let dailyRewardClaimed =
+localStorage.getItem("dailyReward") === "true";
+
+function claimDailyReward() {
+
+    if (dailyRewardClaimed === false) {
+
+        balance += 100;
+
+        dailyRewardClaimed = true;
+
+        alert("🎉 Daily Reward Claimed!\nYou received ₦100.");
+
+    } else {
+
+        alert("❌ You have already claimed today's reward.");
+
+    }
+
+}
 
 console.log(websiteName);
 console.log(owner);
@@ -53,3 +73,4 @@ function claimDailyReward() {
     }
 
 }
+localStorage.setItem("balance", balance);
