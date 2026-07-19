@@ -200,3 +200,90 @@ app.post("/daily-reward", async (req, res) => {
     }
 
 });
+
+// WITHDRAW
+app.post("/withdraw", async (req, res) => {
+
+    try {
+
+        const { email, amount } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found."
+            });
+        }
+
+        if (amount <= 0) {
+            return res.status(400).json({
+                message: "Invalid withdrawal amount."
+            });
+        }
+
+        if (user.balance < amount) {
+            return res.status(400).json({
+                message: "Insufficient balance."
+            });
+        }
+
+        user.balance -= amount;
+
+        await user.save();
+
+        res.json({
+            message: "Withdrawal request submitted successfully.",
+            balance: user.balance
+        });
+
+    } catch (err) {
+
+        res.status(500).json({
+            message: "Server error."
+        });
+
+    }
+
+});
+
+// REFERRAL BONUS
+app.post("/referral", async (req, res) => {
+
+    try {
+
+        const { email } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found."
+            });
+        }
+
+        user.referrals += 1;
+        user.balance += 1000;
+
+        await user.save();
+
+        res.json({
+            message: "Referral bonus added!",
+            balance: user.balance,
+            referrals: user.referrals
+        });
+
+    } catch (err) {
+
+        res.status(500).json({
+            message: "Server error."
+        });
+
+    }
+
+});
+
+// SERVER START
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+});
