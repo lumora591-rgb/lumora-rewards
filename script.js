@@ -17,3 +17,7 @@ console.log(websiteName);
 console.log(owner);
 console.log(users);
 console.log(balance);
+
+function welcomeUser() {
+    alert("Welcome to Lumora Rewards!");
+}
