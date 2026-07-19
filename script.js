@@ -226,3 +226,15 @@ let users = Number(localStorage.getItem("users")) || 1;
 totalUsers.innerHTML = users;
 
 }
+
+function completeTask(reward){
+
+    balance += reward;
+
+    localStorage.setItem("balance", balance);
+
+    updateBalance();
+
+    alert("Task completed! You earned ₦" + reward);
+
+}
