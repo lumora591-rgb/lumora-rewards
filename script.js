@@ -227,6 +227,37 @@ totalUsers.innerHTML = users;
 
 }
 
+const withdrawForm =
+document.getElementById("withdrawForm");
+
+if(withdrawForm){
+
+withdrawForm.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let amount =
+Number(document.getElementById("amount").value);
+
+if(amount > balance){
+
+alert("Insufficient Balance");
+
+return;
+
+}
+
+balance -= amount;
+
+localStorage.setItem("balance",balance);
+
+updateBalance();
+
+alert("Withdrawal Request Submitted Successfully!");
+
+});
+
+}
 function completeTask(reward){
 
     balance += reward;
