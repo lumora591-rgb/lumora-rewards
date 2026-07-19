@@ -21,3 +21,7 @@ console.log(balance);
 function welcomeUser() {
     alert("Welcome to Lumora Rewards!");
 }
+
+function showBalance() {
+    alert("Your Balance is ₦0");
+}
