@@ -95,3 +95,108 @@ app.post("/signup", async (req, res) => {
     }
 
 });
+
+// LOGIN
+app.post("/login", async (req, res) => {
+
+    try {
+
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json({
+                message: "Invalid email or password."
+            });
+        }
+
+        const validPassword = await bcrypt.compare(password, user.password);
+
+        if (!validPassword) {
+            return res.status(400).json({
+                message: "Invalid email or password."
+            });
+        }
+
+        res.json({
+            message: "Login successful!",
+            fullname: user.fullname,
+            email: user.email,
+            balance: user.balance,
+            referrals: user.referrals,
+            referralCode: user.referralCode
+        });
+
+    } catch (err) {
+
+        console.log(err);
+
+        res.status(500).json({
+            message: "Server error."
+        });
+
+    }
+
+});
+
+// GET USER
+app.get("/user/:email", async (req, res) => {
+
+    try {
+
+        const user = await User.findOne({
+            email: req.params.email
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found."
+            });
+        }
+
+        res.json(user);
+
+    } catch (err) {
+
+        res.status(500).json({
+            message: "Server error."
+        });
+
+    }
+
+});
+
+// DAILY REWARD
+app.post("/daily-reward", async (req, res) => {
+
+    try {
+
+        const { email } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found."
+            });
+        }
+
+        user.balance += 500;
+
+        await user.save();
+
+        res.json({
+            message: "₦500 Daily Reward Added!",
+            balance: user.balance
+        });
+
+    } catch (err) {
+
+        res.status(500).json({
+            message: "Server error."
+        });
+
+    }
+
+});
