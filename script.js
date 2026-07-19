@@ -22,6 +22,13 @@ function welcomeUser() {
     alert("Welcome to Lumora Rewards!");
 }
 
+let balance = 0;
+
 function showBalance() {
-    alert("Your Balance is ₦0");
+    alert("Your Balance is ₦" + balance);
+}
+
+function earnMoney() {
+    balance += 500;
+    alert("Congratulations! You earned ₦500.");
 }
