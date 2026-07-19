@@ -216,3 +216,13 @@ if(username){
 username.innerHTML = localStorage.getItem("fullname") || "Guest";
 
 }
+
+const totalUsers = document.getElementById("totalUsers");
+
+if (totalUsers) {
+
+let users = Number(localStorage.getItem("users")) || 1;
+
+totalUsers.innerHTML = users;
+
+}
