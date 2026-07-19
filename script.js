@@ -1,330 +1,288 @@
+// ===============================
+// Lumora Rewards Script - Part 1
+// ===============================
+
+// Mobile Menu
 const menuToggle = document.getElementById("menu-toggle");
 const navLinks = document.querySelector(".nav-links");
 
-menuToggle.addEventListener("click", function(){
-    navLinks.classList.toggle("active");
-});
+if (menuToggle && navLinks) {
+    menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+    });
+}
 
-let websiteName = "Lumora Rewards";
+// Get current user
+const currentUser = {
+    fullname: localStorage.getItem("userName") || "Guest",
+    email: localStorage.getItem("userEmail") || "",
+    balance: Number(localStorage.getItem("userBalance")) || 0,
+    referrals: Number(localStorage.getItem("userReferrals")) || 0
+};
 
-let owner = "Odekunle Emmanuel";
+// Update Dashboard
+function updateDashboard() {
 
-let users = 0;
+    const username = document.getElementById("username");
+    const balance = document.getElementById("balance");
+    const referrals = document.getElementById("referrals");
 
-let balance = 0;
-let dailyRewardClaimed =
-localStorage.getItem("dailyReward") === "true";
-
-function claimDailyReward() {
-
-    if (dailyRewardClaimed === false) {
-
-        balance += 100;
-
-        dailyRewardClaimed = true;
-
-        alert("🎉 Daily Reward Claimed!\nYou received ₦100.");
-
-    } else {
-
-        alert("❌ You have already claimed today's reward.");
-
+    if (username) {
+        username.textContent = currentUser.fullname;
     }
 
-}
-
-console.log(websiteName);
-console.log(owner);
-console.log(users);
-console.log(balance);
-
-function welcomeUser() {
-    alert("Welcome to Lumora Rewards!");
-}
-
-let balance = 0;
-
-function showBalance() {
-    alert("Your Balance is ₦" + balance);
-}
-
-function earnMoney() {
-    balance += 500;
-    alert("Congratulations! You earned ₦500.");
-}
-
-let balance = 0;
-let dailyRewardClaimed = false;
-
-function claimDailyReward() {
-
-    if (dailyRewardClaimed === false) {
-
-        balance += 100;
-
-        dailyRewardClaimed = true;
-
-        alert("🎉 Daily Reward Claimed!\nYou received ₦100.");
-
-    } else {
-
-        alert("❌ You have already claimed today's reward.");
-
+    if (balance) {
+        balance.textContent = "₦" + currentUser.balance;
     }
 
-}
-localStorage.setItem("balance", balance);
-function earnMoney(){
-
-balance += 500;
-
-localStorage.setItem("balance", balance);
-
-updateBalance();
-
-alert("Congratulations! You earned ₦500.");
-
+    if (referrals) {
+        referrals.textContent = currentUser.referrals;
+    }
 }
 
-updateBalance();
+updateDashboard();
 
-document.getElementById("username").innerHTML =
-localStorage.getItem("username") || "Guest";
+// Logout
+function logout() {
 
-/* Dashboard */
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userBalance");
+    localStorage.removeItem("userReferrals");
 
-.dashboard{
-padding:120px 8% 60px;
+    window.location.href = "login.html";
+
 }
 
-.dashboard h1{
-text-align:center;
-margin-bottom:40px;
-color:#FFD700;
-}
+// ===============================
+// Lumora Rewards Script - Part 2
+// Signup & Login
+// ===============================
 
-.dashboard-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-}
-
-.dashboard-card{
-background:#1d1d1d;
-padding:30px;
-border-radius:20px;
-border:1px solid rgba(255,215,0,.2);
-text-align:center;
-transition:.3s;
-}
-
-.dashboard-card:hover{
-transform:translateY(-8px);
-box-shadow:0 0 20px rgba(255,215,0,.2);
-}
-
-.dashboard-card h3{
-color:#FFD700;
-margin-bottom:15px;
-}
-
-.dashboard-card h2{
-margin-bottom:20px;
-}
-
-.dashboard-card button{
-padding:12px 25px;
-background:#FFD700;
-color:#111;
-border:none;
-border-radius:10px;
-cursor:pointer;
-font-weight:bold;
-}
+// Signup
 const signupForm = document.getElementById("signupForm");
 
 if (signupForm) {
 
-signupForm.addEventListener("submit", function(event){
+    signupForm.addEventListener("submit", async (e) => {
 
-event.preventDefault();
+        e.preventDefault();
 
-const fullname = document.getElementById("fullname").value;
+        const fullname = document.getElementById("fullname").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
 
-const email = document.getElementById("email").value;
+        if (password !== confirmPassword) {
+            alert("Passwords do not match.");
+            return;
+        }
 
-const password = document.getElementById("password").value;
+        try {
 
-const confirmPassword = document.getElementById("confirmPassword").value;
+            const response = await fetch("/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    fullname,
+                    email,
+                    password
+                })
+            });
 
-if(password !== confirmPassword){
+            const data = await response.json();
 
-alert("Passwords do not match!");
+            alert(data.message);
 
-return;
+            if (response.ok) {
+                window.location.href = "login.html";
+            }
+
+        } catch (err) {
+            alert("Unable to connect to the server.");
+        }
+
+    });
 
 }
 
-localStorage.setItem("fullname", fullname);
-
-localStorage.setItem("email", email);
-
-localStorage.setItem("password", password);
-
-alert("Account created successfully!");
-
-window.location.href = "login.html";
-
-});
-
+// Login
 const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
 
-loginForm.addEventListener("submit", function(event){
+    loginForm.addEventListener("submit", async (e) => {
 
-event.preventDefault();
+        e.preventDefault();
 
-const email = document.getElementById("loginEmail").value;
+        const email = document.getElementById("loginEmail").value;
+        const password = document.getElementById("loginPassword").value;
 
-const password = document.getElementById("loginPassword").value;
+        try {
 
-const savedEmail = localStorage.getItem("email");
+            const response = await fetch("/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            });
 
-const savedPassword = localStorage.getItem("password");
+            const data = await response.json();
 
-if(email === savedEmail && password === savedPassword){
+            if (!response.ok) {
+                alert(data.message);
+                return;
+            }
 
-alert("Login Successful!");
+            localStorage.setItem("userName", data.fullname);
+            localStorage.setItem("userEmail", data.email);
+            localStorage.setItem("userBalance", data.balance);
+            localStorage.setItem("userReferrals", data.referrals);
 
-window.location.href = "dashboard.html";
+            alert("Login Successful!");
 
-}else{
+            window.location.href = "dashboard.html";
 
-alert("Incorrect email or password.");
+        } catch (err) {
+            alert("Unable to connect to the server.");
+        }
 
-}
+    });
 
-})
+    }// ===============================
+// Lumora Rewards Script - Part 3
+// Dashboard Functions
+// ===============================
 
-}
+// Claim Daily Reward
+async function claimDailyReward() {
 
-const username = document.getElementById("username");
+    if (!currentUser.email) {
+        alert("Please login first.");
+        return;
+    }
 
-if(username){
+    try {
 
-username.innerHTML = localStorage.getItem("fullname") || "Guest";
+        const response = await fetch("/daily-reward", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: currentUser.email
+            })
+        });
 
-}
+        const data = await response.json();
 
-const totalUsers = document.getElementById("totalUsers");
+        alert(data.message);
 
-if (totalUsers) {
+        if (response.ok) {
 
-let users = Number(localStorage.getItem("users")) || 1;
+            currentUser.balance = data.balance;
 
-totalUsers.innerHTML = users;
+            localStorage.setItem("userBalance", data.balance);
 
-}
+            updateDashboard();
 
-const withdrawForm =
-document.getElementById("withdrawForm");
+        }
 
-if(withdrawForm){
+    } catch (err) {
 
-withdrawForm.addEventListener("submit",function(e){
+        alert("Unable to connect to the server.");
 
-e.preventDefault();
-
-let amount =
-Number(document.getElementById("amount").value);
-
-if(amount > balance){
-
-alert("Insufficient Balance");
-
-return;
-
-}
-
-balance -= amount;
-
-localStorage.setItem("balance",balance);
-
-updateBalance();
-
-alert("Withdrawal Request Submitted Successfully!");
-
-});
-
-}
-function completeTask(reward){
-
-    balance += reward;
-
-    localStorage.setItem("balance", balance);
-
-    updateBalance();
-
-    alert("Task completed! You earned ₦" + reward);
-
-}
-
-function copyReferralCode(){
-
-const code =
-document.getElementById("refCode").innerText;
-
-navigator.clipboard.writeText(code);
-
-alert("Referral code copied!");
+    }
 
 }
 
-const withdrawForm =
-document.getElementById("withdrawForm");
+// Withdraw
+const withdrawForm = document.getElementById("withdrawForm");
 
-if(withdrawForm){
+if (withdrawForm) {
 
-withdrawForm.addEventListener("submit",function(e){
+    withdrawForm.addEventListener("submit", async (e) => {
 
-e.preventDefault();
+        e.preventDefault();
 
-let amount =
-Number(document.getElementById("amount").value);
+        const amount = Number(document.getElementById("amount").value);
 
-if(amount > balance){
+        try {
 
-alert("Insufficient Balance");
+            const response = await fetch("/withdraw", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: currentUser.email,
+                    amount
+                })
+            });
 
-return;
+            const data = await response.json();
+
+            alert(data.message);
+
+            if (response.ok) {
+
+                currentUser.balance = data.balance;
+
+                localStorage.setItem("userBalance", data.balance);
+
+                updateDashboard();
+
+            }
+
+        } catch (err) {
+
+            alert("Unable to connect to the server.");
+
+        }
+
+    });
 
 }
 
-balance -= amount;
+// Referral Bonus
+async function addReferralBonus() {
 
-localStorage.setItem("balance",balance);
+    try {
 
-updateBalance();
+        const response = await fetch("/referral", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: currentUser.email
+            })
+        });
 
-alert("Withdrawal Request Submitted Successfully!");
+        const data = await response.json();
 
-});
+        if (response.ok) {
 
-}
+            currentUser.balance = data.balance;
+            currentUser.referrals = data.referrals;
 
-function approveRequest(id){
+            localStorage.setItem("userBalance", data.balance);
+            localStorage.setItem("userReferrals", data.referrals);
 
-document.getElementById(id).innerHTML = "Paid";
+            updateDashboard();
 
-alert("Withdrawal Approved");
+        }
 
-}
+    } catch (err) {
 
-function rejectRequest(id){
+        console.log(err);
 
-document.getElementById(id).innerHTML = "Rejected";
+    }
 
-alert("Withdrawal Rejected");
-
-}
+    }
