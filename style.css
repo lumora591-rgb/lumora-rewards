@@ -440,4 +440,79 @@ margin:15px 0;
 display:none;
 }
 
+/* Authentication */
+
+.auth-container{
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+background:#111;
+padding:20px;
+}
+
+.auth-box{
+width:100%;
+max-width:500px;
+background:#1d1d1d;
+padding:40px;
+border-radius:20px;
+border:1px solid rgba(255,215,0,.3);
+box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+.auth-box h1{
+color:#FFD700;
+text-align:center;
+margin-bottom:10px;
+}
+
+.auth-box p{
+text-align:center;
+margin-bottom:25px;
+color:#ccc;
+}
+
+.auth-box input{
+width:100%;
+padding:15px;
+margin:10px 0;
+border:none;
+border-radius:10px;
+background:#2b2b2b;
+color:white;
+font-size:16px;
+}
+
+.auth-box input:focus{
+outline:2px solid #FFD700;
+}
+
+.auth-box button{
+width:100%;
+padding:16px;
+margin-top:20px;
+background:#FFD700;
+color:#111;
+border:none;
+border-radius:10px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+}
+
+.auth-box button:hover{
+transform:translateY(-3px);
+}
+
+.login-link{
+margin-top:20px;
+text-align:center;
+}
+
+.login-link a{
+color:#FFD700;
+text-decoration:none;
+font-weight:bold;
 }
