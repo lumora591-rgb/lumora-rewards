@@ -3,18 +3,22 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-app.use(express.json());
+const PORT = process.env.PORT || 10000;
+const MONGODB_URI = process.env.MONGODB_URI;
 
-mongoose.connect(process.env.MONGODB_URI)
-.then(() => console.log("✅ MongoDB Connected"))
-.catch(err => console.log(err));
+mongoose
+  .connect(MONGODB_URI)
+  .then(() => {
+    console.log("✅ MongoDB Connected");
+  })
+  .catch((err) => {
+    console.error("❌ MongoDB Connection Error:", err);
+  });
 
 app.get("/", (req, res) => {
-    res.send("Welcome to Lumora Rewards Backend!");
+  res.send("🎉 Lumora Rewards Backend is running and connected!");
 });
 
-const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
