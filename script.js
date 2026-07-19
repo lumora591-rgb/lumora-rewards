@@ -32,3 +32,11 @@ function earnMoney() {
     balance += 500;
     alert("Congratulations! You earned ₦500.");
 }
+
+function claimDailyReward() {
+
+    balance += 100;
+
+    alert("🎉 Daily Reward Claimed!\nYou received ₦100.");
+
+}
