@@ -312,3 +312,19 @@ alert("Withdrawal Request Submitted Successfully!");
 });
 
 }
+
+function approveRequest(id){
+
+document.getElementById(id).innerHTML = "Paid";
+
+alert("Withdrawal Approved");
+
+}
+
+function rejectRequest(id){
+
+document.getElementById(id).innerHTML = "Rejected";
+
+alert("Withdrawal Rejected");
+
+}
