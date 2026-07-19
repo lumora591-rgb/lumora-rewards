@@ -51,6 +51,52 @@ Forgot Password?
 
 </div>
 
+<script>
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    try {
+
+        const response = await fetch("/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email,
+                password
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message);
+            return;
+        }
+
+        // Save user info
+        localStorage.setItem("userEmail", data.email);
+        localStorage.setItem("userName", data.fullname);
+        localStorage.setItem("userBalance", data.balance);
+        localStorage.setItem("userReferrals", data.referrals);
+
+        alert("Login Successful!");
+
+        window.location.href = "dashboard.html";
+
+    } catch (err) {
+
+        alert("Unable to connect to the server.");
+
+    }
+
+});
+</script>
+
 </body>
 
 </html>
