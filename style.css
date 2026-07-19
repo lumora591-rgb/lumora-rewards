@@ -527,3 +527,32 @@ background:#2b2b2b;
 color:white;
 font-size:16px;
 }
+
+.admin-table{
+
+width:100%;
+border-collapse:collapse;
+
+}
+
+.admin-table th,
+.admin-table td{
+
+padding:15px;
+border:1px solid rgba(255,215,0,.2);
+text-align:center;
+
+}
+
+.admin-table th{
+
+background:#FFD700;
+color:#111;
+
+}
+
+.admin-table button{
+
+margin:5px;
+
+}
