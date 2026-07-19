@@ -74,3 +74,16 @@ function claimDailyReward() {
 
 }
 localStorage.setItem("balance", balance);
+function earnMoney(){
+
+balance += 500;
+
+localStorage.setItem("balance", balance);
+
+updateBalance();
+
+alert("Congratulations! You earned ₦500.");
+
+}
+
+updateBalance();
