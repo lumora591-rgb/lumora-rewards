@@ -33,10 +33,23 @@ function earnMoney() {
     alert("Congratulations! You earned ₦500.");
 }
 
+let balance = 0;
+let dailyRewardClaimed = false;
+
 function claimDailyReward() {
 
-    balance += 100;
+    if (dailyRewardClaimed === false) {
 
-    alert("🎉 Daily Reward Claimed!\nYou received ₦100.");
+        balance += 100;
+
+        dailyRewardClaimed = true;
+
+        alert("🎉 Daily Reward Claimed!\nYou received ₦100.");
+
+    } else {
+
+        alert("❌ You have already claimed today's reward.");
+
+    }
 
 }
