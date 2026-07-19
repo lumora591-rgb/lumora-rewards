@@ -177,4 +177,42 @@ window.location.href = "login.html";
 
 });
 
-    }
+const loginForm = document.getElementById("loginForm");
+
+if (loginForm) {
+
+loginForm.addEventListener("submit", function(event){
+
+event.preventDefault();
+
+const email = document.getElementById("loginEmail").value;
+
+const password = document.getElementById("loginPassword").value;
+
+const savedEmail = localStorage.getItem("email");
+
+const savedPassword = localStorage.getItem("password");
+
+if(email === savedEmail && password === savedPassword){
+
+alert("Login Successful!");
+
+window.location.href = "dashboard.html";
+
+}else{
+
+alert("Incorrect email or password.");
+
+}
+
+})
+
+}
+
+const username = document.getElementById("username");
+
+if(username){
+
+username.innerHTML = localStorage.getItem("fullname") || "Guest";
+
+}
