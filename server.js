@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require("path");
 
 const app = express();
 
@@ -15,8 +16,12 @@ mongoose
     console.error("❌ MongoDB Connection Error:", err);
   });
 
+// Serve static files
+app.use(express.static(__dirname));
+
+// Open index.html when someone visits the website
 app.get("/", (req, res) => {
-  res.send("🎉 Lumora Rewards Backend is running and connected!");
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 app.listen(PORT, () => {
