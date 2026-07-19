@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Withdrawal Requests</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<h1>Withdrawal Requests</h1>
+
+<table class="admin-table">
+
+<tr>
+<th>User</th>
+<th>Amount</th>
+<th>Method</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+<tr>
+<td>Odekunle Emmanuel</td>
+<td>₦5,000</td>
+<td>Opay</td>
+<td id="status1">Pending</td>
+
+<td>
+
+<button onclick="approveRequest('status1')">
+Approve
+</button>
+
+<button onclick="rejectRequest('status1')">
+Reject
+</button>
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
